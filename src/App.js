@@ -1,6 +1,9 @@
 
-import { Button } from '@material-ui/core';
-import './App.css';
+
+import Navigation from './components/Navigation';
+import ManipulationPanel from './components/ManipulationPanel';
+import Field from './components/Field';
+import Button from './components/Button';
 
 function App() {
   return (
