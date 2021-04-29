@@ -4,6 +4,10 @@ import Navigation from './components/Navigation';
 import ManipulationPanel from './components/ManipulationPanel';
 import Field from './components/Field';
 import Button from './components/Button';
+import {initFields} from './utils';
+
+const fields = initFields(35);
+
 
 function App() {
   return (
@@ -17,7 +21,7 @@ function App() {
       </header>
 
       <main className = "main">
-        <Field/>
+        <Field fields={fields}/>
       </main>
 
       <footer className = "footer">

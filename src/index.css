@@ -30,10 +30,18 @@ body {
 .dots {
   height:9px;
   width:9px;
-  border:1px solid#0f1d1d;
+  background: #0f1d1d;
 }
 
-.field {
+.Field {
   display: flex;
   flex-wrap:wrap ;
+}
+
+.snake {
+  background: white;
+}
+
+.food {
+  background: pink;
 }

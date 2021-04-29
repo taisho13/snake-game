@@ -1,13 +1,17 @@
+
 import React  from 'react';
 
-const Field = () => {
+const Field = ({fields}) => {
     return(
-        <div>
-            <p>field</p>
+        <div className = "Field">
             {
-            new Array(35 * 35).fill('').map(() => <div className="dots"></div>)
-            }   
-        </div>
+            fields.map((row,key) => {
+                return row.map((column) => {
+                return <div className={`dots ${column}`}></div>
+                })
+            })
+            }
+        </div>  
     );
 };
 
