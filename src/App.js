@@ -10,6 +10,9 @@ import {initFields,getFoodPostion} from './utils';
 const initialPosition = {x:17,y:17};
 const initialValues = initFields(35,initialPosition);
 const defaultInterval = 100;
+const defaultDifficulty = 3;
+
+const Difficulty = [1000,500,100,50,10]
 
 const GameStatus = Object.freeze({
   init: 'init',
@@ -78,14 +81,16 @@ function App() {
   const [status,setStatus] = useState(GameStatus.init);
   const [tick, setTick] = useState(0);
   const [direction, setDirection] = useState(Direction.up);
+  const [difficulty,setDiffculty] = useState(defaultDifficulty)
 
   useEffect(() => {
+    const interval = Difficulty[difficulty - 1]
     setBody([initialPosition])
     timer = setInterval(() => {
       setTick(tick => tick +1)
-    }, defaultInterval)
+    }, interval)
     return unsubscribe
-  },[])
+  },[difficulty])
 
   useEffect(() => {
     if (body.length === 0 || status !== GameStatus.playing) {
@@ -135,6 +140,16 @@ function App() {
     return() => document.removeEventListener('keydown',handleKeyDown)
   },[onChangeDirection])
 
+  const onChangeDifficulty = useCallback((difficulty) => {
+    if(status !== GameStatus.init){
+        return
+    }
+    if(difficulty < 1 || difficulty >Difficulty.length){
+      return
+    }
+    setDiffculty(difficulty)
+  },[status,difficulty])
+
   const handleMoving = () => {
     const { x, y } = body[0]
     const delta = Delta[direction]
@@ -164,10 +179,14 @@ function App() {
     <div className="App">
 
       <header className = "header" >
-        <div className = "title-conteiner">
+        <div className = "title-container">
           <h1 className = "title">Snake Game</h1>
         </div>
-        <Navigation/>
+        <Navigation 
+        length={body.length} 
+        difficulty={difficulty}
+        onChangeDifficulty={onChangeDifficulty}
+        />
       </header>
 
       <main className = "main">
