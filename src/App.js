@@ -4,7 +4,8 @@ import Navigation from './components/Navigation';
 import ManipulationPanel from './components/ManipulationPanel';
 import Field from './components/Field';
 import Button from './components/Button';
-import {initFields} from './utils';
+import {initFields,getFoodPostion} from './utils';
+
 
 const initialPosition = {x:17,y:17};
 const initialValues = initFields(35,initialPosition);
@@ -66,16 +67,20 @@ const isCollision = (fieldSize,position) => {
   return false;
 }
 
+const isEatingMyself = (fields,position) => {
+    return fields[position.y][position.x] === 'snake'
+}
+
 function App() {
 
   const [fields,setFields] = useState(initialValues);
-  const [position,setPosition] = useState();
+  const [body, setBody] = useState([]);
   const [status,setStatus] = useState(GameStatus.init);
   const [tick, setTick] = useState(0);
   const [direction, setDirection] = useState(Direction.up);
 
   useEffect(() => {
-    setPosition(initialPosition)
+    setBody([initialPosition])
     timer = setInterval(() => {
       setTick(tick => tick +1)
     }, defaultInterval)
@@ -83,17 +88,18 @@ function App() {
   },[])
 
   useEffect(() => {
-    if (!position || status !== GameStatus.playing) {
+    if (body.length === 0 || status !== GameStatus.playing) {
       return
     }
-    const canContinue = handleMoving();
-    if(!canContinue){
+    const canContinue = handleMoving()
+    if (!canContinue) {
       unsubscribe()
       setStatus(GameStatus.gameover)
     }
   }, [tick])
 
   const onStart = () => setStatus(GameStatus.playing)
+  const onStop = () => setStatus(GameStatus.suspended)
 
   const onRestart = () => {
     timer = setInterval(() => {
@@ -101,7 +107,7 @@ function App() {
     },defaultInterval)
      setDirection(Direction.up)
      setStatus(GameStatus.init)
-     setPosition(initialPosition)
+     setBody([initialPosition])
      setFields(initFields(35, initialPosition))
   }
 
@@ -129,23 +135,31 @@ function App() {
     return() => document.removeEventListener('keydown',handleKeyDown)
   },[onChangeDirection])
 
-  const  handleMoving = () =>{
-    const {x,y} = position
+  const handleMoving = () => {
+    const { x, y } = body[0]
     const delta = Delta[direction]
-    const newPosition ={
-      x:x + delta.x,
-      y:y + delta.y
+    const newPosition = {
+      x: x + delta.x,
+      y: y + delta.y
     }
-     if (isCollision(fields.length, newPosition)) {
-       return false
+    if (isCollision(fields.length, newPosition) || isEatingMyself(fields,newPosition)) {
+      return false
+    }
+    const newBody = [...body]
+    if (fields[newPosition.y][newPosition.x] !== 'food') {
+      const removingTrack = newBody.pop()
+      fields[removingTrack.y][removingTrack.x] = ''
+    } else {
+      const food = getFoodPostion(fields.length, [...newBody, newPosition])
+      fields[food.y][food.x] = 'food'
      }
-    fields[y][x] = ''
     fields[newPosition.y][newPosition.x] = 'snake'
-    setPosition(newPosition)
+    newBody.unshift(newPosition)
+
+    setBody(newBody)
     setFields(fields)
     return true
   }
-
   return (
     <div className="App">
 
@@ -161,7 +175,12 @@ function App() {
       </main>
 
       <footer className = "footer">
-        <Button status = {status} onStart = {onStart} onRestart = {onRestart} />
+        <Button 
+        status = {status} 
+        onStop = {onStop}
+        onStart = {onStart} 
+        onRestart = {onRestart} 
+        />
         <ManipulationPanel onChange = {onChangeDirection}/>
       </footer>
     </div>

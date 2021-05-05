@@ -1,14 +1,12 @@
 import React  from 'react';
 
-const Button = ({onStart,status,onRestart}) => {
+const Button = ({onStop,onStart,status,onRestart}) => {
     return(
-        <div>
-            {
-              status === 'gameover' ?
-            <button onClick = {onRestart}>Game Over</button> 
-            :   
-            <button onClick = {onStart}>start</button>
-            }
+        <div className = "button">
+            {status === "gameover"  && <button onClick = {onRestart}>Game Over</button>}
+            {status === "init"      && <button onClick = {onStart}>start</button>}
+            {status === "suspended" && <button onClick = {onStart}>start</button>}
+            {status === "playing"   && <button onClick = {onStop}>stop</button>}
         </div>
     );
 };
