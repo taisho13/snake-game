@@ -1,9 +1,13 @@
 
 import React from 'react';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+ import {
+   faArrowLeft,
+   faArrowUp,
+   faArrowDown,
+   faArrowRight
+ } from '@fortawesome/free-solid-svg-icons'
+
 
 
 const ManipulationPanel = ({onChange}) => {
@@ -15,18 +19,18 @@ const ManipulationPanel = ({onChange}) => {
     return(
         <div className = "manipulation-panel">
             <button className = 'manipulation-btn btn btn-left'  onClick = {onLeft}>
-            <ArrowBackIcon/>
+            <FontAwesomeIcon icon={faArrowLeft} />
             </button>
             <div>
             <button className = 'manipulation-btn btn btn-up'    onClick = {onUp}>
-            <ArrowUpwardIcon/>
+            <FontAwesomeIcon icon={faArrowUp} />
             </button>
             <button className = 'manipulation-btn btn btn-down'  onClick = {onDown}>
-            <ArrowDownwardIcon/>
+            <FontAwesomeIcon icon={faArrowDown} />
             </button>
             </div>
             <button className = 'manipulation-btn btn btn-right' onClick = {onRight}>
-            <ArrowForwardIcon/>
+            <FontAwesomeIcon icon={faArrowRight} />
             </button>
         </div>
 
