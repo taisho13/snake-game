@@ -16,7 +16,7 @@ import {
   initFields,
   isCollision,
   isEatingMyself,
-  getFoodPosition,
+  getFoodPostion,
 } from '../utils';
 
 let timer = undefined;
@@ -119,7 +119,7 @@ const useSnakeGame = () => {
       const removingTrack = newBody.pop()
       fields[removingTrack.y][removingTrack.x] = ''
     } else {
-      const food = getFoodPosition(fields.length, [...newBody, newPosition])
+      const food = getFoodPostion(fields.length, [...newBody, newPosition])
       fields[food.y][food.x] = 'food'
      }
     fields[newPosition.y][newPosition.x] = 'snake'
