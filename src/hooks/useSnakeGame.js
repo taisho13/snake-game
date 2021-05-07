@@ -88,11 +88,11 @@ const useSnakeGame = () => {
       if(!newDirection){
         return;
       }
-      onChangeDirection(newDirection);
+      updateDirection(newDirection);
     }
     document.addEventListener('keydown',handleKeyDown);
     return() => document.removeEventListener('keydown',handleKeyDown)
-  },[onChangeDirection])
+  },[updateDirection])
 
   const updateDifficulty = useCallback((difficulty) => {
     if(status !== GameStatus.init){

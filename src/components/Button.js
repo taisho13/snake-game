@@ -1,7 +1,8 @@
 import React  from 'react';
+import { GameStatus } from '../constants';
 
 const Button = ({onStop,onStart,status,onRestart}) => {
-    return(
+    return(　
         <div className = "button">
             {status === GameStatus.gameover  && <button className = 'btn btn-gameover'  onClick = {onRestart}>Game Over</button>}
             {status === GameStatus.init      && <button className = 'btn btn-init'      onClick = {onStart}>start</button>}
