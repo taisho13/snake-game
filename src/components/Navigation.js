@@ -10,25 +10,30 @@ const Navigation = ({length,difficulty = defaultDifficulty,onChangeDifficulty}) 
    
     return(
         <div className = 'navigation'>
+
             <div className = 'navigation-item'>
                 <span className = 'navigation-lavel'>Length:</span>
                 <div className = 'navigation-item-number-container'>
                     <div className = 'num-board'>{length}</div>
                 </div>
             </div>
+
             <div className = 'navigation-item'>
                 <span className = 'navigation-lavel'>Difficulty:</span>
                 <div className = 'navigation-item-number-container'>
                     <div className = 'num-board'>{difficulty}</div>
                     <div className = 'difficlty-button-container'>
+
                     <div
                className={`difficulty-button difficulty-up ${upVisibility}`}
                onClick={onUpDifficulty}
              ></div>
+
              <div
                className={`difficulty-button difficulty-down ${downVisibility}`}
                onClick={onDownDifficulty}
              ></div>
+
                     </div>
                 </div>
             </div>
