@@ -7,7 +7,6 @@ export const initialPosition = {x:17,y:17};
 export const initialValues = initFields(fieldSize,initialPosition);
 export const defaultInterval = 100;
 export const defaultDifficulty = 3;
-
 export const Difficulty = [1000,500,100,50,10]
 
 export const GameStatus = Object.freeze({

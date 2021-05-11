@@ -11,7 +11,7 @@ export const getFoodPostion = (fieldSize, excludes) => {
     }
   }
 
-export const initFields = (fieldSize,snake) => {
+  export const initFields = (fieldSize,snake) => {
     const fields = [];
     for (let i = 0; i < fieldSize; i++) {
       const cols = new Array(fieldSize).fill('')
@@ -25,7 +25,7 @@ export const initFields = (fieldSize,snake) => {
     return fields
   }
 
-  export const isCollision = (fieldSize,position) => {
+export const isCollision = (fieldSize,position) => {
     if (position.y < 0 || position.x < 0) {
       return true;
     }
@@ -37,6 +37,6 @@ export const initFields = (fieldSize,snake) => {
     return false;
   }
   
-  export const isEatingMyself = (fields,position) => {
+export const isEatingMyself = (fields,position) => {
       return fields[position.y][position.x] === 'snake'
-  }
+    }

@@ -1,4 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
+
+//stateの初期値の中身
 import {
   defaultInterval,
   defaultDifficulty,
@@ -12,6 +14,7 @@ import {
   OppositeDirection,
 } from '../constants';
 
+//メソッド群
 import {
   initFields,
   isCollision,
@@ -37,14 +40,19 @@ const useSnakeGame = () => {
   const [direction, setDirection] = useState(Direction.up);
   const [difficulty,setDiffculty] = useState(defaultDifficulty)
 
+　//useEffectの第一引数は実行する処理、第二引数は頻度
+　//ここではdifficultyが変わった時にこのuseEffectが毎回実行される
+ //difficultyの変更でへびの速度が変わる関数
   useEffect(() => {
     const interval = Difficulty[difficulty - 1]
     setBody([initialPosition])
     timer = setInterval(() => {
+        //一定時間の指定
       setTick(tick => tick +1)
     }, interval)
     return unsubscribe
   },[difficulty])
+
 
   useEffect(() => {
     if (body.length === 0 || status !== GameStatus.playing) {
@@ -82,6 +90,7 @@ const useSnakeGame = () => {
   },[direction,status]
   )
 
+  //キーボードで操作するための関数
   useEffect(() => {
     const handleKeyDown = (e) => {
       const newDirection = DirectionKeyCodeMap[e.keyCode];
